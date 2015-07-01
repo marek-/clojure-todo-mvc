@@ -25,7 +25,7 @@
 
 (defn add-todo [title]
   (let [item (new-item @title)]
-    (pr (str "swapping" title))
+    (reset! title)
     (swap! counter inc)
     (swap! app-db assoc-in [:todos (item :id)] item))
   )
@@ -43,12 +43,11 @@
   (let [title (atom "")]
    (fn [] 
      [:div [:input#new-todo {:type "text"
-                        :value @title
-                        :placeholder "What needs to be done"
-                        :on-change #(reset! title (-> % .-target .-value))
-                        :on-key-down #(on-key-down % title)
-                        }]
-      [:span {}  @title]])))
+                             :value @title
+                             :placeholder "What needs to be done"
+                             :on-change #(reset! title (-> % .-target .-value))
+                             :on-key-down #(on-key-down % title)
+                             }]])))
 
 (defn todo-item [todo]
   (pr todo)
