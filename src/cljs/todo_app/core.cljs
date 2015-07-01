@@ -7,11 +7,64 @@
     (:import goog.History))
 
 ;; -------------------------
+;; Storage
+(defonce app-db (atom {:todos (sorted-map)}))
+(defonce counter (atom 0))
+
+;; -------------------------
+;; Constants
+(defonce enter-key 13)
+
+;; -------------------------
+;; Actions
+
+(defn new-item [title]
+  {:id @counter
+   :title title
+   })
+
+(defn add-todo [title]
+  (let [item (new-item @title)]
+    (pr (str "swapping" title))
+    (swap! counter inc)
+    (swap! app-db assoc-in [:todos (item :id)] item))
+  )
+
+;; -------------------------
+;; Components
+
+(defn on-key-down [key title]
+  (let [key-pressed (.-which key)]
+    (condp = key-pressed
+      enter-key (add-todo title)
+      nil)))
+
+(defn todo-editor []
+  (let [title (atom "")]
+   (fn [] 
+     [:div [:input#new-todo {:type "text"
+                        :value @title
+                        :placeholder "What needs to be done"
+                        :on-change #(reset! title (-> % .-target .-value))
+                        :on-key-down #(on-key-down % title)
+                        }]
+      [:span {}  @title]])))
+
+(defn todo-item [todo]
+  (pr todo)
+  [:li (todo :title)])
+
+(defn todo-list [{:keys [todos] :as db}]
+  (let [items (vals todos)]
+    [:ul (for [todo items] (todo-item todo))]))
+
+;; -------------------------
 ;; Views
 
 (defn home-page []
   [:div [:h2 "Welcome to todo-app"]
-   [:div [:a {:href "#/about"} "go to about page"]]])
+   [todo-editor]
+   [todo-list @app-db]])
 
 (defn about-page []
   [:div [:h2 "About todo-app"]
