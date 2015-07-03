@@ -20,7 +20,7 @@
 
 (defn new-item [title]
   {:id @counter
-   :title title
+   :title title 
    })
 
 (defn add-todo [title]
