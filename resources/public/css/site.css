@@ -32,3 +32,33 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+#todoapp {
+  background: #fff;
+  margin: 130px 0 40px 0;
+  position: relative;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0.2)
+              0 25px 50px 0 rgba(0, 0, 0, 0.1)  
+}
+
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;  
+  max-width: 50%;
+}
+
+.todo-item {
+}
+
+.todo-item li {
+    line-height: 2;
+}
+
+.todo-item a.delete {
+    float: right;
+}
+
+.todo-item a.delete:hover {
+    text-decoration: none;
+}

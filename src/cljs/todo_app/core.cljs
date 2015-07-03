@@ -50,18 +50,19 @@
                              }]])))
 
 (defn todo-item [todo]
-  (pr todo)
-  [:li (todo :title)])
+  [:div.todo-item
+   [:li (todo :title)]
+   [:a.delete "x"]])
 
 (defn todo-list [{:keys [todos] :as db}]
   (let [items (vals todos)]
-    [:ul (for [todo items] (todo-item todo))]))
+    [:ul.todo-list (for [todo items] (todo-item todo))]))
 
 ;; -------------------------
 ;; Views
 
 (defn home-page []
-  [:div [:h2 "Welcome to todo-app"]
+  [:div [:h2 "Welcome to todo-app change"]
    [todo-editor]
    [todo-list @app-db]])
 
